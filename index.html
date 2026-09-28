@@ -37,6 +37,153 @@
 <body>
 
 <!-- =====================================================
+     CUSTOMER PUBLIC SIDE
+====================================================== -->
+<div id="customerPortal">
+    <header class="customerNav">
+        <div class="customerBrand">
+            <img src="snookers-logo.png" alt="Snooker's Billiard Hall logo">
+            <span>Snooker's Billiard Hall</span>
+        </div>
+        <nav>
+            <button class="customerNavBtn" type="button" onclick="showCustomerLookup()">View My Reservation</button>
+        </nav>
+    </header>
+
+    <main class="customerMain">
+        <section id="customerHomeView">
+            <div class="customerHero">
+                <div class="customerHeroCopy">
+                    <span class="customerEyebrow">BILLIARDS • KTV • GOOD TIMES</span>
+                    <h1>Play, sing, and make good memories.</h1>
+                    <p>
+                        Reserve a billiard table or our KTV room ahead of time.
+                        No customer account is required.
+                    </p>
+                    <div class="customerHeroActions">
+                        <button type="button" onclick="showCustomerReservation()">Make a Reservation</button>
+                        <button class="customerLightBtn" type="button" onclick="showCustomerLookup()">View My Reservation</button>
+                    </div>
+                </div>
+                <div class="customerHeroCard">
+                    <span>Plan your visit</span>
+                    <h3>Reserve before you arrive</h3>
+                    <p>Choose your facility, date, start time, and duration. Keep your reservation ID for checking your booking later.</p>
+                </div>
+            </div>
+
+            <div class="customerInfoGrid">
+                <article>
+                    <h3>3 Billiard Tables</h3>
+                    <p>Choose from Billiard Table 1, 2, or 3 when making your reservation.</p>
+                </article>
+                <article>
+                    <h3>1 KTV Room</h3>
+                    <p>Book the KTV room in advance and select your preferred duration.</p>
+                </article>
+                <article>
+                    <h3>30-Minute Grace Period</h3>
+                    <p>If a reserved session has not started within 30 minutes after its scheduled time, the reservation is automatically cancelled.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="customerReservationView" class="customerPublicView" style="display:none;">
+            <div class="customerPageHeading">
+                <div>
+                    <span class="customerEyebrow">RESERVATION</span>
+                    <h2>Make a Reservation</h2>
+                    <p>No account needed. Complete the details below and save your reservation ID.</p>
+                </div>
+                <button class="customerLightBtn" type="button" onclick="showCustomerHome()">Back to Home</button>
+            </div>
+
+            <div class="customerFormCard">
+                <div class="customerFormGrid">
+                    <div class="customerField">
+                        <label for="cResCustomer">Customer Name</label>
+                        <input type="text" id="cResCustomer" placeholder="Enter your full name">
+                    </div>
+                    <div class="customerField">
+                        <label for="cResContact">Contact Number</label>
+                        <input type="text" id="cResContact" placeholder="Enter your contact number">
+                    </div>
+                    <div class="customerField">
+                        <label for="cResType">Reservation Type</label>
+                        <select id="cResType" onchange="populateCustomerFacilities(); updateCustomerReservationEstimate();">
+                            <option value="Billiard">Billiard</option>
+                            <option value="KTV">KTV</option>
+                        </select>
+                    </div>
+                    <div class="customerField">
+                        <label for="cResFacility">Facility</label>
+                        <select id="cResFacility" onchange="updateCustomerReservationEstimate()"></select>
+                    </div>
+                    <div class="customerField">
+                        <label for="cResDate">Date</label>
+                        <input type="date" id="cResDate" onchange="updateCustomerReservationEstimate()">
+                    </div>
+                    <div class="customerField">
+                        <label for="cResStartTime">Start Time</label>
+                        <input type="time" id="cResStartTime" min="14:00" max="23:30" step="1800" onchange="updateCustomerReservationEstimate()">
+                    </div>
+                    <div class="customerField">
+                        <label for="cResDuration">Duration</label>
+                        <select id="cResDuration" onchange="updateCustomerReservationEstimate()">
+                            <option value="30">30 Minutes</option>
+                            <option value="60" selected>1 Hour</option>
+                            <option value="120">2 Hours</option>
+                            <option value="180">3 Hours</option>
+                            <option value="240">4 Hours</option>
+                            <option value="300">5 Hours</option>
+                            <option value="360">6 Hours</option>
+                            <option value="420">7 Hours</option>
+                            <option value="480">8 Hours</option>
+                        </select>
+                    </div>
+                    <div class="customerEstimate" id="customerReservationEstimate">
+                        Select your schedule to see the estimated price.
+                    </div>
+                </div>
+
+                <div id="cResMsg" class="msg"></div>
+                <div class="customerFormActions">
+                    <button type="button" onclick="handleCustomerReservation()">Reserve Now</button>
+                </div>
+            </div>
+
+            <div id="customerReservationConfirmation" class="customerConfirmation" style="display:none;"></div>
+        </section>
+
+        <section id="customerLookupView" class="customerPublicView" style="display:none;">
+            <div class="customerPageHeading">
+                <div>
+                    <span class="customerEyebrow">MY BOOKING</span>
+                    <h2>View My Reservation</h2>
+                    <p>Enter the reservation ID given after booking.</p>
+                </div>
+                <button class="customerLightBtn" type="button" onclick="showCustomerHome()">Back to Home</button>
+            </div>
+
+            <div class="customerLookupCard">
+                <div class="customerLookupRow">
+                    <input type="text" id="customerLookupId" placeholder="Reservation ID (example: RES001)">
+                    <button type="button" onclick="handleCustomerReservationLookup()">Search Reservation</button>
+                </div>
+                <div id="customerLookupMsg" class="msg"></div>
+                <div id="customerLookupResult"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="customerFooter">
+        <span>Snooker's Billiard Hall</span>
+        <button type="button" onclick="showStaffLogin()">Staff / Admin Login</button>
+    </footer>
+</div>
+
+
+<!-- =====================================================
 
          LOGIN
 
@@ -82,6 +229,9 @@
             </button>
 
             <div id="msgLogin"></div>
+            <button class="secondary customerBackBtn" type="button" onclick="showCustomerHome()">
+                Back to Customer Page
+            </button>
 
         </div>
 
@@ -227,10 +377,6 @@
 
             <button data-tab="customer-records" onclick="showTab('customer-records')">
                 Customer Records & History
-            </button>
-
-            <button data-tab="reservation-calendar" onclick="showTab('reservation-calendar')">
-                Reservation Calendar
             </button>
 
             <button data-tab="staff-tasks" onclick="showTab('staff-tasks')">
@@ -1683,22 +1829,6 @@
                 <div class="tableWrap"><table><thead><tr><th>Customer</th><th>Contact</th><th>Reservations</th><th>Transactions</th><th>Total Spent</th><th>Action</th></tr></thead><tbody id="customerRecordsBody"></tbody></table></div>
                 <h2 class="sectionTitle">Customer History Details</h2>
                 <div id="customerHistoryDetail" class="card"><span class="small-note">Select View History to see a customer's records.</span></div>
-            </div>
-
-<!-- =================================================
-                 RESERVATION CALENDAR
-            ================================================== -->
-            <div class="section" id="tab-reservation-calendar">
-                <h2>Reservation Calendar</h2>
-                <div class="algo">View all Billiard and KTV reservations scheduled for a selected date.</div>
-                <div class="card">
-                    <div class="moduleSearchRow">
-                        <input type="date" id="calendarDate" onchange="renderReservationCalendar()">
-                        <button class="secondary" onclick="renderReservationCalendar()">View Schedule</button>
-                    </div>
-                    <div id="calendarMsg" class="msg"></div>
-                </div>
-                <div class="tableWrap"><table><thead><tr><th>Time</th><th>End</th><th>Customer</th><th>Facility</th><th>Type</th><th>Status</th></tr></thead><tbody id="reservationCalendarBody"></tbody></table></div>
             </div>
 
 <!-- =================================================
